@@ -1,43 +1,25 @@
-# prometheus-node-exporter
-Prometheus node-exporter installer
+## Installing Loki and Promtail
 
-## Installation
-
-- Clone the repository
+- Create apt directory
 
 ```
-git clone 
-```
-- Change into the diretory
-
-```
-cd prometheus-node-exporter
+mkdir -p /etc/apt/keyrings/
 ```
 
-- Run installer script with `sudo` privileges
+- Configure repo source
 
 ```
-sudo ./install_node_exporter
+wget -q -O - https://apt.grafana.com/gpg.key | gpg --dearmor > /etc/apt/keyrings/grafana.gpg
 ```
 
-Check status of the node-exporter service to make sure it is running
+- Check sources configuration
+
 ```
-sudo systemctl status node-exporter.service
+echo "deb [signed-by=/etc/apt/keyrings/grafana.gpg] https://apt.grafana.com stable main" | tee /etc/apt/sources.list.d/grafana.list
 ```
-The output should look like this
 
-`● node_exporter.service - Prometheus Node Exporter
-     Loaded: loaded (/etc/systemd/system/node_exporter.service; enabled; vendor preset: enabled)
-     Active: active (running) ...
-     ....`
+- Install Loki and Promtal
 
-
-## Overview metrics
-
-When the exporter is running, open browser and go to `http://localhost:9100` or `http://<your-server-ip>:9100/metrics`
-
-The browser should respond with metrics collected by the exporter.
-
-In case you don't get reponse, please check your firewall.
-
-
+```
+sudo apt install loki promtail
+```
