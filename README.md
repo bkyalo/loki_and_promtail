@@ -23,3 +23,15 @@ echo "deb [signed-by=/etc/apt/keyrings/grafana.gpg] https://apt.grafana.com stab
 ```
 sudo apt install loki promtail
 ```
+
+- Add Promtail to the adm group:
+
+```
+sudo usermod -aG adm promtail
+```
+
+- Change the file permissions:
+
+```
+sudo chmod 644 /var/log/auth.log
+```
